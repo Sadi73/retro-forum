@@ -12,7 +12,7 @@ const displayPosts = (posts) => {
         const leftDiv = document.createElement('div');
         const rightDiv = document.createElement('div');
 
-        parentDiv.classList.add('bg-[#F3F3F5]', 'mb-4', 'p-10', 'flex', 'gap-5');
+        parentDiv.classList.add('bg-[#F3F3F5]', 'mb-4', 'p-10', 'flex', 'gap-5', 'rounded-lg');
         leftDiv.classList.add('w-20', 'h-16', 'rounded', 'bg-white', 'mb-4');
 
         rightDiv.innerHTML = `

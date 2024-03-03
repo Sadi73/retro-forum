@@ -1,7 +1,7 @@
-body {
+/* body {
     width: 80%;
     margin: auto;
-}
+} */
 
 .nav-item-container ul li {
     display: flex;
@@ -59,6 +59,12 @@ body {
     justify-content: space-between;
 }
 
-#all-posts-container{
-
+.join-our-forum{
+    background-color: #24253f;
+    color: white;
+    padding: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
 }
