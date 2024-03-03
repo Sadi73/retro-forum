@@ -29,7 +29,7 @@ body {
     background: #24253f;
     color: white;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 100px;
     border-radius: 20px;
 }
@@ -57,4 +57,8 @@ body {
 .banner .right-side>div {
     display: flex;
     justify-content: space-between;
+}
+
+#all-posts-container{
+
 }
