@@ -1,3 +1,8 @@
+body {
+    width: 80%;
+    margin: auto;
+}
+
 .nav-item-container ul li {
     display: flex;
     justify-content: center;
@@ -10,11 +15,46 @@
 .sign-in-button {
     cursor: pointer;
     align-items: center;
-    border-radius:  25px;
+    border-radius: 25px;
     padding-left: 2rem;
     padding-right: 2rem;
     font-size: .875rem;
     font-weight: 600;
     background-color: #797DFC;
     color: white;
+}
+
+.banner {
+    /* background: url('./images/bgbanner.png'); */
+    background: #24253f;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 100px;
+    border-radius: 20px;
+}
+
+.banner .left-side {}
+
+.banner .left-side h1 {
+    font-size: 64px;
+    line-height: 1.2;
+
+}
+
+.banner .left-side p {
+    font-size: 20px;
+}
+
+.banner .right-side {
+    background: white;
+    color: #24253f;
+    padding: 48px;
+    border-radius: 20px;
+    width: 35%;
+}
+
+.banner .right-side>div {
+    display: flex;
+    justify-content: space-between;
 }
