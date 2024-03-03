@@ -4,10 +4,15 @@ const loadDataForLetsDiscuss = async () => {
     displayPosts(allPosts?.posts)
 }
 
+const loadLatestPosts = async () => {
+    const response = await fetch('https://openapi.programming-hero.com/api/retro-forum/latest-posts');
+    const latestPosts = await response.json();
+    displayLatestPosts(latestPosts)
+}
+
 const displayPosts = (posts) => {
     const postContainer = document.getElementById('all-posts-container');
     posts.map(post => {
-        console.log(post)
         const parentDiv = document.createElement('div');
         const leftDiv = document.createElement('div');
         const rightDiv = document.createElement('div');
@@ -54,4 +59,41 @@ const displayPosts = (posts) => {
 
 }
 
+const displayLatestPosts = (latestPosts) => {
+    const latestPostsContainer = document.getElementById('latest-post-card-holder');
+    latestPosts.map(latestPost => {
+        console.log(latestPost)
+        const parentDiv = document.createElement('div');
+        parentDiv.classList.add('card', 'w-96', 'bg-base-100', 'shadow-xl')
+        parentDiv.innerHTML = `
+                    <figure class="px-10 pt-10">
+                        <img src=${latestPost?.cover_image} alt="cover"
+                            class="rounded-xl" />
+                    </figure>
+                    <div class="card-body  ">
+                        <div class='flex gap-2'>
+                            <img src='./images/calendarIcon.svg'/>
+                            <p>${latestPost?.author?.posted_date ? latestPost?.author?.posted_date : 'No Publish Date'}</p>
+                        </div>
+                        <h2 class="card-title">${latestPost?.title}</h2>
+                        <p>${latestPost?.description}</p>
+                        <div class="flex items-center gap-5">
+                            <div class='w-10'>
+                                <img src=${latestPost?.profile_image} class='rounded-full'/>
+                            </div>
+
+                            <div>
+                                <h3 class='font-bold'>${latestPost?.author?.name}</h3>
+                                <p class='text-sm'>${latestPost?.author?.designation ? latestPost?.author?.designation : 'Unknown' }</p>
+                            </div>
+                        </div>
+                    </div>
+        `;
+
+        latestPostsContainer.appendChild(parentDiv)
+    })
+
+}
+
 loadDataForLetsDiscuss();
+loadLatestPosts()
