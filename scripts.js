@@ -1,3 +1,5 @@
+const clickedPost = [];
+
 const loadDataForLetsDiscuss = async () => {
     const response = await fetch('https://openapi.programming-hero.com/api/retro-forum/posts');
     const allPosts = await response.json();
@@ -13,12 +15,18 @@ const loadLatestPosts = async () => {
 const displayPosts = (posts) => {
     const postContainer = document.getElementById('all-posts-container');
     posts.map(post => {
+        const dummyData = JSON.stringify(post);
         const parentDiv = document.createElement('div');
         const leftDiv = document.createElement('div');
         const rightDiv = document.createElement('div');
 
         parentDiv.classList.add('bg-[#F3F3F5]', 'mb-4', 'p-10', 'flex', 'gap-5', 'rounded-lg');
-        leftDiv.classList.add('w-20', 'h-16', 'rounded', 'bg-white', 'mb-4');
+        leftDiv.classList.add('w-16', 'mb-4', 'relative');
+
+        leftDiv.innerHTML = `
+            <img src=${post.image} alt="" class='rounded-lg'>
+            <div class='w-3 h-3 ${post.isActive ? 'bg-green-500' : 'bg-red-500'} rounded-full absolute -top-1.5 -right-1.5 border-2'></div>
+        `;
 
         rightDiv.innerHTML = `
                         <div class="flex gap-10">
@@ -28,7 +36,7 @@ const displayPosts = (posts) => {
                         <h3 class="text-2xl">${post?.title}</h3>
                         <p>${post?.description}</p>
     
-                        <div class="flex justify-between">
+                        <div class="flex justify-between border-t-2 pt-4 mt-4">
                             <div class="flex gap-5">
                                 <div class="flex">
                                     <img src="./images/messageIcon.svg" alt="">
@@ -44,17 +52,23 @@ const displayPosts = (posts) => {
                                 </div>
                             </div>
     
-                            <div>
-                                <img src="./images/mark.svg" alt="">
+                            <div id='sadi'>
+                            <img src="./images/mark.svg" alt="" class="clickable-image" data-dummydata='${dummyData}'>
                             </div>
     
                         </div>
-        `
+        `;
+
+        rightDiv.classList.add('grow');
+
+
 
         parentDiv.appendChild(leftDiv);
         parentDiv.appendChild(rightDiv);
 
-        postContainer.appendChild(parentDiv)
+
+
+        postContainer.appendChild(parentDiv);
     })
 
 }
@@ -62,7 +76,6 @@ const displayPosts = (posts) => {
 const displayLatestPosts = (latestPosts) => {
     const latestPostsContainer = document.getElementById('latest-post-card-holder');
     latestPosts.map(latestPost => {
-        console.log(latestPost)
         const parentDiv = document.createElement('div');
         parentDiv.classList.add('card', 'w-96', 'bg-base-100', 'shadow-xl')
         parentDiv.innerHTML = `
@@ -84,7 +97,7 @@ const displayLatestPosts = (latestPosts) => {
 
                             <div>
                                 <h3 class='font-bold'>${latestPost?.author?.name}</h3>
-                                <p class='text-sm'>${latestPost?.author?.designation ? latestPost?.author?.designation : 'Unknown' }</p>
+                                <p class='text-sm'>${latestPost?.author?.designation ? latestPost?.author?.designation : 'Unknown'}</p>
                             </div>
                         </div>
                     </div>
@@ -96,4 +109,44 @@ const displayLatestPosts = (latestPosts) => {
 }
 
 loadDataForLetsDiscuss();
-loadLatestPosts()
+loadLatestPosts();
+
+document.addEventListener('click', function (event) {
+    if (event.target.classList.contains('clickable-image')) {
+        const dummyData = event.target.getAttribute('data-dummydata');
+        handleOnClick(dummyData);
+    }
+});
+
+
+const handleOnClick = (post) => {
+    const data = JSON.parse(post);
+    // console.log(data);
+    clickedPost.push(data)
+    // console.log(JSON.parse(post))
+    showClickedPost(clickedPost)
+}
+
+const showClickedPost = (clickedPost) => {
+    const readPostsContainer = document.getElementById('read-posts-container');
+    const number = document.getElementById('numberOfPosts');
+
+    readPostsContainer.innerHTML = '';
+
+    clickedPost.map(post => {
+        const div = document.createElement('div');
+        div.classList.add('bg-white', 'p-5', 'rounded-lg', 'mt-5', 'flex', 'justify-between');
+        div.innerHTML = `
+        <p>${post?.title}</p>
+        <div class="flex items-center ">
+            <img src="./images/eyeIcon.svg" alt="">
+            <p>${post?.view_count}</p>
+        </div>
+    `;
+
+        readPostsContainer.appendChild(div);
+
+        number.innerText = clickedPost.length;
+
+    })
+}
