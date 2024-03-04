@@ -126,9 +126,7 @@ document.addEventListener('click', function (event) {
 
 const handleOnClick = (post) => {
     const data = JSON.parse(post);
-    // console.log(data);
     clickedPost.push(data)
-    // console.log(JSON.parse(post))
     showClickedPost(clickedPost)
 }
 

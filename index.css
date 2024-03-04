@@ -68,3 +68,15 @@
     justify-content: center;
     border-radius: 20px;
 }
+
+@media screen and (max-width: 600px) {
+    .banner{
+        flex-direction: column;
+    }
+    .banner .left-side h1{
+        font-size: 32px;
+    }
+    .banner .right-side{
+        width: 100%;
+    }
+}
