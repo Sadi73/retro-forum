@@ -1,7 +1,11 @@
 const clickedPost = [];
 
-const loadDataForLetsDiscuss = async () => {
-    const response = await fetch('https://openapi.programming-hero.com/api/retro-forum/posts');
+const loadDataForLetsDiscuss = async (inputText) => {
+    let url = 'https://openapi.programming-hero.com/api/retro-forum/posts';
+    if (inputText != undefined) {
+        url = `https://openapi.programming-hero.com/api/retro-forum/posts?category=${inputText}`;
+    };
+    const response = await fetch(url);
     const allPosts = await response.json();
     displayPosts(allPosts?.posts)
 }
@@ -14,6 +18,7 @@ const loadLatestPosts = async () => {
 
 const displayPosts = (posts) => {
     const postContainer = document.getElementById('all-posts-container');
+    postContainer.innerHTML = '';
     posts.map(post => {
         const dummyData = JSON.stringify(post);
         const parentDiv = document.createElement('div');
@@ -149,4 +154,10 @@ const showClickedPost = (clickedPost) => {
         number.innerText = clickedPost.length;
 
     })
+};
+
+const handleSearch = () => {
+    const inputField = document.getElementById('input-field');
+    // console.log(inputField.value)
+    loadDataForLetsDiscuss(inputField.value)
 }
